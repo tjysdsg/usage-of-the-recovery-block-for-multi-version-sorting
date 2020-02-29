@@ -1,0 +1,30 @@
+<p>This document is written in <code>markdown</code>, you can see a fully-rendered version by opening <code>README.html</code> in a web browser, or by visiting https://github.com/tjysdsg/usage-of-the-recovery-block-for-multi-version-sorting/blob/master/README.md</p>
+<h1 id="source-code">Source code</h1>
+<h2 id="src"><code>src/</code></h2>
+<p>In <code>src/</code> directory, <code>bubble_sort</code> and <code>heap_sort</code> along with their mutants are implemented in <code>sort.h/.cpp</code>. The <code>acceptance_test</code> function is implemented in <code>acceptance_test.h/.cpp</code>. In addition, <code>test_sort</code> function is implemented for the tests in <code>tests/</code> directory.</p>
+<h2 id="tests"><code>tests</code></h2>
+<p>Basic tests for two sorting algorithms and their mutants are implemented here.</p>
+<h2 id="demo"><code>demo</code></h2>
+<p>This directory contains code using recovery block to implement fault tolerance.</p>
+<h1 id="build-instructions">Build instructions</h1>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>CMake</li>
+<li>a C++ compiler <em>although the program is mostly written in C, I used some C++ features, so it probably won’t compile using a pure C compiler</em></li>
+</ul>
+<p>This project uses <code>CMake</code> build system.</p>
+<p>To build the project, go to the project root:</p>
+<p><code>shell script [user@machine:~/recovery-block-for-multi-version-sorting]$ cmake . [user@machine:~/recovery-block-for-multi-version-sorting]$ make</code></p>
+<p>The produced binaries, <code>demo</code> and <code>test</code>, are in <code>bin/</code> directory.</p>
+<p><strong>This project is built and tested on Linux, but it should work across platform, if not, please contact me</strong></p>
+<h1 id="how-to-run">How to run</h1>
+<ul>
+<li><code>demo</code>: Build the project, and run <code>bin/demo</code>.</li>
+<li><code>test</code>: Build the project, and run <code>bin/test</code>.</li>
+</ul>
+<h1 id="how-this-works">How this works</h1>
+<p>Two sorting algorithms, bubble sorting and heap sorting, and their “mutants” (to see how mutants are mutated, search for <code>FIXME</code> keyword in <code>src/sort.cpp</code>) are implemented. Then in <code>demo/main.cpp</code>, the mutated version of bubble sort is first used as the primary implementation, if it fails (which it will), <code>heap_sort</code> is used as the alternative implementation. If yet it fails again, the program aborts and halt. The detailed calling history is printed to standard output.</p>
+<p>The reason not to use the normal version of bubble sort is that it never fails (as long as the input is valid), so it cannot fulfill the purpose of implementing software fault tolerance.</p>
+<p>Also, you can uncomment the first line of <code>demo/main.cpp</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c++"><code class="sourceCode cpp"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="pp">#define N_VERSION</span></a></code></pre></div>
+<p>and rebuild the project to see a more general implementation of N-version recovery block.</p>

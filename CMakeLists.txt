@@ -8,5 +8,7 @@ aux_source_directory(${PROJECT_SOURCE_DIR}/src SRCS)
 aux_source_directory(${PROJECT_SOURCE_DIR}/tests TEST_SRCS)
 aux_source_directory(${PROJECT_SOURCE_DIR}/demo DEMO_SRCS)
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
+
 add_executable(demo ${SRCS} ${DEMO_SRCS})
 add_executable(test ${SRCS} ${TEST_SRCS})
